@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation - StudyAI</title>
+    <style>
+        body {
+            font-family: 'SF Pro Display', 'Inter', 'system-ui', '-apple-system', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0A0F1C 0%, #1A1F2E 30%, #2A2F3E 100%);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2C5F4A;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            color: #64748B;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #10B981;
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #EF4444;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            color: #374151;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .success-message {
+            color: #059669;
+        }
+        
+        .error-message {
+            color: #DC2626;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #2C5F4A 0%, #1B3B2A 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(44, 95, 74, 0.3);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+            color: #64748B;
+            font-size: 0.875rem;
+        }
+        
+        .auto-redirect {
+            background: #F3F4F6;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #6B7280;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">StudyAI Platform</div>
+        <div class="subtitle">AI-Powered Learning Assistant</div>
+        
+        {{#if success}}
+        <div class="success-icon">✅</div>
+        <div class="message success-message">
+            {{message}}
+        </div>
+        <div class="auto-redirect">
+            You will be automatically redirected to the login page in 5 seconds...
+        </div>
+        <a href="{{redirectUrl}}" class="button">Continue to Login</a>
+        {{else}}
+        <div class="error-icon">❌</div>
+        <div class="message error-message">
+            {{message}}
+        </div>
+        <a href="{{redirectUrl}}" class="button">Go to Login</a>
+        {{/if}}
+        
+        <div class="footer">
+            <p>© 2025 StudyAI Platform. All rights reserved.</p>
+            <p>Having trouble? Contact support at support@study-ai.io</p>
+        </div>
+    </div>
+    
+    {{#if success}}
+    <script>
+        // Auto-redirect after 5 seconds on success
+        setTimeout(function() {
+            window.location.href = "{{redirectUrl}}";
+        }, 5000);
+    </script>
+    {{/if}}
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "name": "study-ai-engine",
+  "version": "1.0.0",
+  "description": "AI processing engine for content analysis and quiz generation",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "lint": "eslint src/"
+  },
+  "keywords": ["ai", "nlp", "content-analysis", "quiz-generation"],
+  "author": "Alec",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^4.0.0",
+    "@google/generative-ai": "^0.2.1",
+    "@anthropic-ai/sdk": "^0.6.0",
+    "pdf-parse": "^1.1.1",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "whisper-node": "^0.1.2",
+    "natural": "^6.5.0",
+    "compromise": "^14.10.0",
+    "dotenv": "^16.3.1",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.6.2",
+    "eslint": "^8.47.0"
+  }
+}

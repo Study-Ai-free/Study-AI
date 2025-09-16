@@ -1,0 +1,26 @@
+{
+  "name": "study-ai-platform",
+  "version": "1.0.0",
+  "description": "AI-Powered Study Assistant Platform",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "ai-engine"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:simple": "node dev.js",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../ai-engine && npm install",
+    "start": "npm run dev"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
+  }
+}
