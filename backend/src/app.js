@@ -4,13 +4,14 @@ const helmet = require('helmet');
 const path = require('path');
 require('dotenv').config();
 
-const authApiRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/auth'); // This has the actual login/register routes
 const uploadRoutes = require('./routes/upload');
 const quizRoutes = require('./routes/quiz');
 const analyticsRoutes = require('./routes/analytics');
-const oneDriveRoutes = require('./routes/onedrive');
-const googleDriveRoutes = require('./routes/googledrive');
-const cloudRoutes = require('./routes/cloud');
+// Temporarily disabled cloud routes until credentials are configured
+// const oneDriveRoutes = require('./routes/onedrive');
+// const googleDriveRoutes = require('./routes/googledrive');
+// const cloudRoutes = require('./routes/cloud');
 
 const errorHandler = require('./middleware/errorHandler');
 const logger = require('./utils/logger');
@@ -92,13 +93,14 @@ app.get('/health', (req, res) => {
 });
 
 // API Routes
-app.use('/api/auth', authApiRoutes);
+app.use('/api/auth', authRoutes); // Changed to use the correct auth routes
 app.use('/api/upload', uploadRoutes);
 app.use('/api/quiz', quizRoutes);
 app.use('/api/analytics', analyticsRoutes);
-app.use('/api/onedrive', oneDriveRoutes);
-app.use('/api/googledrive', googleDriveRoutes);
-app.use('/api/cloud', cloudRoutes);
+// Temporarily disabled cloud routes until credentials are configured
+// app.use('/api/onedrive', oneDriveRoutes);
+// app.use('/api/googledrive', googleDriveRoutes);
+// app.use('/api/cloud', cloudRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

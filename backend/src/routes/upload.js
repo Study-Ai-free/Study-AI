@@ -6,7 +6,6 @@ const { body, validationResult } = require('express-validator');
 const Content = require('../models/Content');
 const Subject = require('../models/Subject');
 const authMiddleware = require('../middleware/auth');
-const FileProcessor = require('../services/FileProcessor');
 const logger = require('../utils/logger');
 
 const router = express.Router();
@@ -85,8 +84,8 @@ router.post('/file', authMiddleware, upload.single('file'), [
 
     logger.info(`File uploaded: ${req.file.originalname} by user ${userId}`);
 
-    // Start background processing
-    FileProcessor.processFile(content.id);
+    // For now, skip background processing since FileProcessor service doesn't exist
+    // FileProcessor.processFile(content.id);
 
     res.status(201).json({
       message: 'File uploaded successfully',

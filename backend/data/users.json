@@ -1,0 +1,12 @@
+[
+  {
+    "id": "02621c00-f94e-4478-a580-3246b4842936",
+    "email": "test@example.com",
+    "passwordHash": "$2a$12$QvlIPPJce.hj3mEan7Yg6eD5cvxECm2T1AfiTtMnNfjwYbAfPQCEW",
+    "firstName": "Test",
+    "lastName": "User",
+    "isVerified": false,
+    "createdAt": "2025-09-17T14:17:47.092Z",
+    "lastLogin": "2025-09-17T14:17:55.526Z"
+  }
+]

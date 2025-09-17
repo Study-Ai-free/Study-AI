@@ -7,6 +7,16 @@ const logger = require('../utils/logger');
 
 const router = express.Router();
 
+// Test endpoint to verify frontend-backend connection
+router.get('/test', (req, res) => {
+  logger.info('Test endpoint called from frontend');
+  res.json({ 
+    message: 'Backend connection successful',
+    timestamp: new Date().toISOString(),
+    headers: req.headers
+  });
+});
+
 // Register new user
 router.post('/register', [
   body('email').isEmail().normalizeEmail(),
@@ -15,8 +25,10 @@ router.post('/register', [
   body('lastName').notEmpty().trim()
 ], async (req, res) => {
   try {
+    logger.info('Registration attempt for email:', req.body.email);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.warn('Registration validation errors:', errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -72,8 +84,10 @@ router.post('/login', [
   body('password').notEmpty()
 ], async (req, res) => {
   try {
+    logger.info('Login attempt for email:', req.body.email);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      logger.warn('Login validation errors:', errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 

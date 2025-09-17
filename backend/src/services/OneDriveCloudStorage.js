@@ -11,28 +11,41 @@ class OneDriveCloudStorage {
     this.redirectUri = process.env.ONEDRIVE_REDIRECT_URI;
     this.scopes = ['https://graph.microsoft.com/Files.ReadWrite.All', 'https://graph.microsoft.com/User.Read'];
     
-    this.msalInstance = new ConfidentialClientApplication({
-      auth: {
-        clientId: this.clientId,
-        clientSecret: this.clientSecret,
-        authority: `https://login.microsoftonline.com/${this.tenantId}`
-      }
-    });
-    
+    // Don't initialize MSAL client immediately - only when needed
+    this.msalInstance = null;
     this.graphClient = null;
     this.appFolderPath = '/StudyAI-Data';
+  }
+
+  // Initialize MSAL client only when needed
+  initializeMsal() {
+    if (!this.msalInstance && this.clientId && this.clientSecret) {
+      this.msalInstance = new ConfidentialClientApplication({
+        auth: {
+          clientId: this.clientId,
+          clientSecret: this.clientSecret,
+          authority: `https://login.microsoftonline.com/${this.tenantId}`
+        }
+      });
+    }
+    return this.msalInstance;
   }
 
   /**
    * Get the authorization URL for user login
    */
   getAuthUrl() {
+    const msal = this.initializeMsal();
+    if (!msal) {
+      throw new Error('OneDrive client credentials not configured');
+    }
+    
     const authCodeUrlRequest = {
       scopes: this.scopes,
       redirectUri: this.redirectUri,
     };
     
-    return this.msalInstance.getAuthCodeUrl(authCodeUrlRequest);
+    return msal.getAuthCodeUrl(authCodeUrlRequest);
   }
 
   /**
@@ -40,13 +53,18 @@ class OneDriveCloudStorage {
    */
   async authenticateWithCode(authCode) {
     try {
+      const msal = this.initializeMsal();
+      if (!msal) {
+        throw new Error('OneDrive client credentials not configured');
+      }
+      
       const tokenRequest = {
         code: authCode,
         scopes: this.scopes,
         redirectUri: this.redirectUri,
       };
 
-      const response = await this.msalInstance.acquireTokenByCode(tokenRequest);
+      const response = await msal.acquireTokenByCode(tokenRequest);
       
       this.graphClient = Client.init({
         authProvider: (done) => {
